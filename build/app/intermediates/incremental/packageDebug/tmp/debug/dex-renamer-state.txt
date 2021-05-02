@@ -1,0 +1,4 @@
+#Sat May 01 13:43:26 CDT 2021
+base.0=C\:\\Users\\gagec\\Documents\\School\\Project\\practicum\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
