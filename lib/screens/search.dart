@@ -8,7 +8,8 @@ class SearchEmojiScreen extends StatefulWidget {
 }
 
 class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
-  UserPlatform userPlatform = UserPlatform('Android', 'One');
+  /// Store the platform and version of emojis the user wants to see.
+  UserPlatform userPlatform = UserPlatform('Apple', 'iOS 14');
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Choose the platform
               Text('SELECT PLATFORM'),
               DropdownButton<String>(
                 value: userPlatform.platform,
@@ -45,11 +47,12 @@ class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
                   color: Colors.purpleAccent,
                 ),
                 onChanged: (String newValue) {
+                  // Reset the state when a option is selected.
                   setState(() {
                     userPlatform.platform = newValue;
                   });
                 },
-                items: <String>['Android', 'Apple', 'Twitter', 'Four']
+                items: <String>['Apple', 'Android', 'Twitter', 'Facebook']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -62,6 +65,7 @@ class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Choose the version.
               Text('SELECT VERSION'),
               DropdownButton<String>(
                 value: userPlatform.version,
@@ -74,11 +78,12 @@ class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
                   color: Colors.purpleAccent,
                 ),
                 onChanged: (String newValue) {
+                  // Reset the state when a option is selected.
                   setState(() {
                     userPlatform.version = newValue;
                   });
                 },
-                items: <String>['One', 'Two', 'Free', 'Four']
+                items: <String>['iOS 14', 'iOS 13', 'iOS 12', 'iOS 11']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -92,7 +97,7 @@ class _SearchEmojiScreenState extends State<SearchEmojiScreen> {
               child: Text('Preview Message'),
               onPressed: () {
                 print('Pressed');
-
+                // Send the user to a new screen that shows the emojis.
                 Navigator.push(
                   context,
                   MaterialPageRoute(

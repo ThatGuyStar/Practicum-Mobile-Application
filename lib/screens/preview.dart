@@ -8,10 +8,17 @@ class Preview extends StatefulWidget {
 }
 
 class _PreviewState extends State<Preview> {
+  /// Grabs the message from the textbox.
   TextEditingController messageController = TextEditingController();
+
+  /// Holds the full original message.
   Message message;
-  UserPlatform userPlatform = UserPlatform('Android', 'One');
-  RecipientPlatform recipientPlatform = RecipientPlatform('Android', 'One');
+
+  /// Store the current users platform.
+  UserPlatform userPlatform = UserPlatform('Apple', 'iOS 14');
+
+  /// Store the recipents platform.
+  RecipientPlatform recipientPlatform = RecipientPlatform('Apple', 'iOS 14');
 
   @override
   void dispose() {
@@ -43,6 +50,7 @@ class _PreviewState extends State<Preview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Allow the user to choose their platform.
               Text('SELECT YOUR PLATFORM'),
               DropdownButton<String>(
                 value: userPlatform.platform,
@@ -59,7 +67,7 @@ class _PreviewState extends State<Preview> {
                     userPlatform.platform = newValue;
                   });
                 },
-                items: <String>['Android', 'Apple', 'Twitter', 'Four']
+                items: <String>['Apple', 'Android', 'Twitter', 'Facebook']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -72,6 +80,7 @@ class _PreviewState extends State<Preview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Allow the user to select the version of their platform
               Text('SELECT YOUR VERSION'),
               DropdownButton<String>(
                 value: userPlatform.version,
@@ -88,7 +97,7 @@ class _PreviewState extends State<Preview> {
                     userPlatform.version = newValue;
                   });
                 },
-                items: <String>['One', 'Two', 'Free', 'Four']
+                items: <String>['iOS 14', 'iOS 13', 'iOS 12', 'iOS 11']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -104,6 +113,7 @@ class _PreviewState extends State<Preview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Select the recipents platform
               Text('SELECT RECIPIENT PLATFORM'),
               DropdownButton<String>(
                 value: recipientPlatform.platform,
@@ -120,7 +130,7 @@ class _PreviewState extends State<Preview> {
                     recipientPlatform.platform = newValue;
                   });
                 },
-                items: <String>['Android', 'Apple', 'Twitter', 'Four']
+                items: <String>['Apple', 'Android', 'Twitter', 'Four']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -133,6 +143,7 @@ class _PreviewState extends State<Preview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Select the recipients version
               Text('SELECT RECIPIENT VERSION'),
               DropdownButton<String>(
                 value: recipientPlatform.version,
@@ -149,7 +160,7 @@ class _PreviewState extends State<Preview> {
                     recipientPlatform.version = newValue;
                   });
                 },
-                items: <String>['One', 'Two', 'Free', 'Four']
+                items: <String>['iOS 14', 'iOS 13', 'iOS 12', 'iOS 11']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -173,21 +184,17 @@ class _PreviewState extends State<Preview> {
               ElevatedButton(
                   child: Text('Preview Message'),
                   onPressed: () {
-                    print('Pressed');
-                    message = Message(messageController.text);
-                    print(message.messageToConvert);
+                    print('Pressed preview message');
+                    message = Message(messageController.text, userPlatform,
+                        recipientPlatform);
+                    print('message being sent: ' + message.messageToConvert);
                     showDialog(
                       context: context,
                       builder: (context) {
                         return AlertDialog(
                           // Retrieve the text the that user has entered by using the
                           // TextEditingController.
-                          content: Text(message.convertMessage(
-                              messageController.text,
-                              userPlatform.platform,
-                              userPlatform.version,
-                              recipientPlatform.platform,
-                              recipientPlatform.version)),
+                          content: Text(message.convertMessage()),
                         );
                       },
                     );
